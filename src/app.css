@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-backgroundColor text-textColor font-en;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    @apply text-linkColor;
+}
+
+.text-color {
+    @apply text-color1;
+}
+
+.color1 {
+    @apply text-color1;
+}
+
+.color2 {
+    @apply text-color2;
+}
+
+.color3 {
+    @apply text-color3;
+}
+
+.en-font {
+    @apply font-en;
+}
+
+.jp-font {
+    @apply font-jp;
+}
+
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.009); /* カードを少し拡大 */
+    /*box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); !* シャドウを強調 *!*/
+    cursor: pointer; /* ポインタを表示 */
+}
+
+.pointer {
+    cursor: pointer; /* ポインタを表示 */
+}
