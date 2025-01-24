@@ -2,7 +2,7 @@ name: Deploy apps.bitboxx Site to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
