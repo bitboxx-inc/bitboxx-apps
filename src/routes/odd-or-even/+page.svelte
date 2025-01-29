@@ -1,23 +1,60 @@
 <script lang="ts">
-    import Card, {Content as CardContent} from '@smui/card';
+    const appId = '6740538794';
+    const appName = '奇数偶数どっち';
+    const privacyPolicy = '/privacy-policy';
+    const supportEmail = 'support_app@bitboxx.co.jp';
 
-    const appId = '6740538794'
-    const appName = '奇数偶数どっち'
-    const privacyPolicy = 'https://github.com/bitboxx-inc/bitboxx-apps/blob/main/privacy-policies/%E5%A5%87%E6%95%B0%E5%81%B6%E6%95%B0%E3%81%A9%E3%81%A3%E3%81%A1.md';
+    // 画像のパスを配列に格納
+    const appImages = [
+        "/app/odd-or-even/1_0.png",
+        "/app/odd-or-even/2_0.png",
+        "/app/odd-or-even/3_0.png",
+    ];
 
     function openAppPage(appId: string) {
-        window.open(`https://itunes.apple.com/jp/app/id${appId}`, "_blank"); // 新しいタブで開く
+        window.open(`https://itunes.apple.com/jp/app/id${appId}`, "_blank");
     }
 </script>
 
-<span class="text-3xl">{appName}</span>
+<div class="max-w-lg mx-auto p-6 bg-white shadow-lg text-center">
+    <span class="text-3xl font-bold text-gray-900">{appName}</span>
 
-<p>
-    カンタン入力で、奇数か偶数かすぐわかる！
-</p>
-<a href={privacyPolicy} target="_blank">プライバシーポリシー</a>
+    <p class="mt-3 text-lg text-gray-700">
+        カンタン入力で、奇数か偶数かすぐわかる！
+    </p>
 
-<img class="mt-4 pointer"
-     src="/JP/Download_on_App_Store/Black_lockup/SVG/Download_on_the_App_Store_Badge_JP_RGB_blk_100317.svg"
-     on:click={() => openAppPage(appId)}
-     alt="App Icon">
+    <!-- アプリ画像の横スクロールビュー -->
+    <div class="mt-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div class="flex space-x-4">
+            {#each appImages as image}
+                <img class="w-48 h-auto rounded-lg shadow-md" src="{image}" alt="App Screenshot">
+            {/each}
+        </div>
+    </div>
+
+    <!-- 対象年齢とデータ収集情報 -->
+    <div class="mt-4 p-4 border-l-4 border-blue-500 bg-gray-50 text-left">
+        <p><strong>対象年齢:</strong> ALL</p>
+        <p><strong>データ収集:</strong> なし</p>
+    </div>
+
+    <!-- プライバシーポリシー -->
+    <div class="mt-4">
+        ※アプリのダウンロードおよび使用は、<a href={privacyPolicy} class="text-blue-600 hover:underline">プライバシーポリシー</a>に同意したものとみなします。
+    </div>
+
+    <!-- App Store ダウンロードボタン -->
+    <img class="mt-6 cursor-pointer mx-auto w-48"
+         src="/JP/Download_on_App_Store/Black_lockup/SVG/Download_on_the_App_Store_Badge_JP_RGB_blk_100317.svg"
+         on:click={() => openAppPage(appId)}
+         alt="App Icon">
+
+    <!-- サポートメールアドレス -->
+    <div class="mt-4">
+        <p class="text-gray-700"><strong>サポート:</strong>
+            <a href="mailto:{supportEmail}" class="text-blue-600 hover:underline">
+                {supportEmail}
+            </a>
+        </p>
+    </div>
+</div>

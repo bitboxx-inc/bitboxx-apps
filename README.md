@@ -1,2 +1,1 @@
 # bitboxx-apps
-apps
