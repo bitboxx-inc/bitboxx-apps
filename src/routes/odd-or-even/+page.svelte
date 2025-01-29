@@ -16,7 +16,7 @@
     }
 </script>
 
-<div class="max-w-lg mx-auto p-6 bg-white shadow-lg text-center">
+<div class="max-w-lg mx-auto bg-white text-center">
     <span class="text-3xl font-bold text-gray-900">{appName}</span>
 
     <p class="mt-3 text-lg text-gray-700">
