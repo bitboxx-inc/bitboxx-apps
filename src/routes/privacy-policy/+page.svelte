@@ -66,7 +66,7 @@
     <p>プライバシーに関するお問い合わせは、以下の連絡先までお願いします。</p>
 
     <p class="mt-2"><strong>会社名:</strong> 株式会社bitboxx</p>
-    <p><strong>メール:</strong> <a href="mailto:support_app@bitboxx.co.jp" class="text-blue-600">support_app@bitboxx.co.jp</a></p>
+    <p><strong>メール:</strong> <a href="mailto:support-apps@bitboxx.co.jp" class="text-blue-600">support-apps@bitboxx.co.jp</a></p>
     <p><strong>Webサイト:</strong> <a href="https://bitboxx.co.jp" class="text-blue-600">https://bitboxx.co.jp</a></p>
 </div>
 

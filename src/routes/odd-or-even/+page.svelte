@@ -2,7 +2,7 @@
     const appId = '6740538794';
     const appName = '奇数偶数どっち';
     const privacyPolicy = '/privacy-policy';
-    const supportEmail = 'support_app@bitboxx.co.jp';
+    const supportEmail = 'support-apps@bitboxx.co.jp';
 
     // 画像のパスを配列に格納
     const appImages = [
