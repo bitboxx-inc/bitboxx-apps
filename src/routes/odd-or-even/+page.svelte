@@ -2,6 +2,7 @@
     const appId = '6740538794';
     const appName = '奇数偶数どっち';
     const privacyPolicy = '/privacy-policy';
+    const termOfService = '/terms-of-service'
     const supportEmail = 'support-apps@bitboxx.co.jp';
 
     // 画像のパスを配列に格納
@@ -40,7 +41,7 @@
 
     <!-- プライバシーポリシー -->
     <div class="mt-4">
-        ※アプリのダウンロードおよび使用は、<a href={privacyPolicy} class="text-blue-600 hover:underline">プライバシーポリシー</a>に同意したものとみなします。
+        ※アプリのダウンロードおよび使用は、<a href={termOfService} class="text-blue-600 hover:underline">利用規約</a>、および、<a href={privacyPolicy} class="text-blue-600 hover:underline">プライバシーポリシー</a>に同意したものとみなします。
     </div>
 
     <!-- App Store ダウンロードボタン -->
