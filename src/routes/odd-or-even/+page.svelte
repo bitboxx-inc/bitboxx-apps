@@ -36,7 +36,7 @@
     <!-- 対象年齢とデータ収集情報 -->
     <div class="mt-4 p-4 border-l-4 border-blue-500 bg-gray-50 text-left">
         <p><strong>対象年齢:</strong> ALL</p>
-        <p><strong>データ収集:</strong> なし</p>
+        <p><strong>データ収集:</strong> サードパーティによるデータ収集</p>
     </div>
 
     <!-- プライバシーポリシー -->
