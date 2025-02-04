@@ -10,41 +10,49 @@ body {
     flex-direction: column;
 }
 
-a {
-    @apply text-linkColor;
+/* Apple Storeのフォントスタイル */
+.font-en {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+.font-jp {
+    font-family: "SF Pro JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+/* Appleの標準文字色 */
 .text-color {
-    @apply text-color1;
+    color: #1D1D1F; /* Apple Store の標準フォントカラー */
 }
 
 .color1 {
-    @apply text-color1;
+    color: #1D1D1F;
 }
 
 .color2 {
-    @apply text-color2;
+    color: #6E6E73; /* Apple Store のサブテキスト用グレー */
 }
 
 .color3 {
-    @apply text-color3;
+    color: #86868B; /* Apple Store の説明用グレー */
 }
 
-.en-font {
-    @apply font-en;
+/* リンクのスタイル (Apple風) */
+a {
+    color: #0071E3; /* Appleのリンクカラー */
+    text-decoration: none;
 }
 
-.jp-font {
-    @apply font-jp;
+a:hover {
+    text-decoration: underline;
 }
 
+/* カードのホバーエフェクト */
 .card {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: scale(1.009); /* カードを少し拡大 */
-    /*box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); !* シャドウを強調 *!*/
     cursor: pointer; /* ポインタを表示 */
 }
 
