@@ -1,6 +1,7 @@
 export const apps = [
   {
     id: '6740538794',
+    path: 'odd-or-even', // 過去にリリースした際に設定したパスのため残しておく
     name: '奇数偶数どっち',
     description: 'カンタン入力で奇数か偶数かわかるアプリ',
     images: [
@@ -23,4 +24,4 @@ export const apps = [
   },
 ];
 
-export const findApp = (id: string) => apps.find(app => app.id === id);
+export const findApp = (id: string) => apps.find(app => app.id === id || app.path === id);
