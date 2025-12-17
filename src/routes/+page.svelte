@@ -1,8 +1,9 @@
 <script lang="ts">
 
-    const apps = [
-        {id: '6740538794', name: '奇数偶数どっち', link: '/odd-or-even'}
-    ]
+  const apps = [
+    {id: '6740538794', name: '奇数偶数どっち', link: '/odd-or-even'},
+    {id: '6749750301', name: '住所で郵便番号検索', link: '/postalcode-address'}
+  ]
 </script>
 
 <div>
