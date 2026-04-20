@@ -1,103 +1,181 @@
 <script lang="ts">
 	import '../app.css';
-	export let title = "bitboxx Apps";
+	import { base } from '$app/paths';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { fade, slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+
 	let isMenuOpen = false;
+	let scrolled = false;
 
-	function toggleMenu() {
-		isMenuOpen = !isMenuOpen;
+	function toggleMenu() { isMenuOpen = !isMenuOpen; }
+	function closeMenu() { isMenuOpen = false; }
+
+	onMount(() => {
+		const onScroll = () => { scrolled = window.scrollY > 24; };
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	});
+
+	$: if (typeof document !== 'undefined') {
+		document.body.style.overflow = isMenuOpen ? 'hidden' : '';
 	}
 
-	function closeMenu() {
-		isMenuOpen = false;
-	}
+	const navItems: Array<[string, string]> = [
+		[`${base}/`, 'リリース済みのアプリ'],
+		[`${base}/terms-of-service`, '利用規約'],
+		[`${base}/privacy-policy`, 'プライバシーポリシー']
+	];
+
+	$: currentPath = $page.url.pathname.replace(/\/$/, '') || '/';
 </script>
 
-<div class="min-h-screen flex flex-col bg-gray-100">
-	<!-- Header -->
-	<header class="bg-white shadow-sm">
-		<div class="container mx-auto px-4 py-4 flex justify-between items-center">
-			<!-- Hamburger Icon -->
-			<button class="md:hidden text-gray-600 focus:outline-none" on:click={toggleMenu}>
-				<span class="material-icons text-3xl">menu</span>
-			</button>
+<div class="relative min-h-screen bg-cream-50 text-ink font-sans flex flex-col overflow-x-hidden">
+	<header
+		class={`fixed top-0 left-0 w-full z-[70] transition-all duration-500
+			${isMenuOpen ? 'bg-cream-50 border-b border-ink/10' : scrolled ? 'bg-cream-50/85 backdrop-blur-md border-b border-ink/5' : 'bg-transparent'}`}
+	>
+		<div class="max-w-[1400px] mx-auto h-20 px-6 md:px-10 flex items-center justify-between">
+			<a href="{base}/" class="flex items-center gap-3" aria-label="bitboxx Apps">
+				<img src="{base}/black.svg" alt="bitboxx" class="h-6 md:h-7 w-auto" />
+				<span class="font-mincho text-[11px] md:text-[12px] tracking-[0.22em] text-ink/55 border-l border-ink/15 pl-3">
+					Apps
+				</span>
+			</a>
 
-			<h1 class="text-2xl font-semibold">{title}</h1>
-
-			<!-- Navigation for larger screens -->
-			<nav class="md:flex space-x-4">
-				<a href="https://github.com/bitboxx-inc/bitboxx-apps" target="_blank" class="text-blue-600 hover:underline">GitHub</a>
+			<nav class="hidden lg:flex items-center gap-7 text-sm">
+				{#each navItems as [href, label]}
+					{@const active = href.replace(/\/$/, '') === currentPath || (href === `${base}/` && currentPath === '/')}
+					<a
+						{href}
+						class={`font-mincho transition-colors ${active ? 'text-ink' : 'text-ink/55 hover:text-ink'}`}
+					>
+						{label}
+					</a>
+				{/each}
+				<a
+					href="https://github.com/bitboxx-inc/bitboxx-apps"
+					target="_blank"
+					rel="noreferrer"
+					class="font-mono text-[11px] tracking-[0.22em] uppercase text-ink/55 hover:text-ink transition-colors"
+				>
+					GitHub ↗
+				</a>
 			</nav>
 
+			<button
+				class="menu-btn lg:hidden relative z-[61] w-12 h-12 flex items-center justify-center rounded-2xl transition-colors duration-300"
+				on:click={toggleMenu}
+				aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+				aria-expanded={isMenuOpen}
+			>
+				{#if isMenuOpen}
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+						<path d="M6 6l12 12M18 6L6 18"/>
+					</svg>
+				{:else}
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+						<path d="M4 8h16M4 16h16"/>
+					</svg>
+				{/if}
+			</button>
 		</div>
 	</header>
 
-	<!-- Mobile Menu (Overlay) -->
 	{#if isMenuOpen}
-		<div class="fixed inset-0 bg-black/50 z-40" on:click={closeMenu}></div>
-		<div class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transition-transform transform translate-x-0">
-			<div class="p-6 flex justify-between items-center border-b">
-				<h2 class="text-xl font-semibold">メニュー</h2>
-				<button class="text-gray-600 focus:outline-none" on:click={closeMenu}>
-					<span class="material-icons text-3xl">close</span>
-				</button>
-			</div>
-			<nav class="p-4 space-y-4">
-				<a href="/" class="block text-gray-700 hover:text-blue-600" on:click={closeMenu}>リリース済みのアプリ</a>
-				<a href="/terms-of-service" class="block text-gray-700 hover:text-blue-600" on:click={closeMenu}>利用規約</a>
-				<a href="/privacy-policy" class="block text-gray-700 hover:text-blue-600" on:click={closeMenu}>プライバシーポリシー</a>
-				<a href="https://github.com/bitboxx-inc/bitboxx-apps" target="_blank" class="block text-gray-700 hover:text-blue-600" on:click={closeMenu}>GitHub</a>
+		<div
+			transition:fade={{ duration: 180 }}
+			class="mobile-menu fixed inset-0 z-[60] lg:hidden flex flex-col pt-28 px-8 overflow-y-auto"
+			on:click={closeMenu}
+			on:keydown
+			role="presentation"
+		>
+			<nav
+				transition:slide={{ duration: 260, easing: quintOut }}
+				class="relative flex flex-col gap-5 font-mincho text-2xl"
+				on:click|stopPropagation
+				on:keydown
+				role="presentation"
+			>
+				{#each navItems as [href, label]}
+					<a {href} class="text-ink/85 hover:text-ink transition-colors" on:click={closeMenu}>
+						{label}
+					</a>
+				{/each}
+				<a
+					href="https://github.com/bitboxx-inc/bitboxx-apps"
+					target="_blank"
+					rel="noreferrer"
+					class="text-ink/55 font-mono text-base tracking-[0.2em] uppercase mt-4"
+					on:click={closeMenu}
+				>
+					GitHub ↗
+				</a>
 			</nav>
 		</div>
 	{/if}
 
-	<!-- Main Content -->
-	<main class="flex-grow container mx-auto px-4 py-8">
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-			<!-- Sidebar -->
-			<aside class="hidden md:block col-span-1 bg-white shadow-sm rounded p-4">
-				<b>コンテンツ</b>
-				<nav class="space-y-2 ml-4 mt-2">
-					<a href="/" class="block text-gray-700 hover:text-blue-600">リリース済みのアプリ</a>
-				</nav>
-				<b>情報</b>
-				<nav class="space-y-2 ml-4 mt-2">
-					<a href="/terms-of-service" class="block text-gray-700 hover:text-blue-600">利用規約</a>
-				</nav>
-				<nav class="space-y-2 ml-4 mt-2">
-					<a href="/privacy-policy" class="block text-gray-700 hover:text-blue-600">プライバシーポリシー</a>
-				</nav>
-			</aside>
-
-			<!-- Content Area -->
-			<section class="col-span-1 md:col-span-2 bg-white shadow-sm rounded p-6">
-				<slot />
-			</section>
-		</div>
+	<main class="flex-1 pt-28 md:pt-32">
+		<slot />
 	</main>
 
-	<!-- Footer -->
-	<footer class="bg-gray-50 border-t border-gray-200 py-4">
-		<div class="container mx-auto px-4 text-center text-sm text-gray-600">
-			2025 &copy; bitboxx Inc.
+	<footer class="relative mt-24 md:mt-32 py-14 md:py-16 border-t border-ink/10">
+		<div class="relative max-w-[1400px] mx-auto px-6 md:px-10">
+			<div class="grid md:grid-cols-12 gap-10 md:gap-12">
+				<div class="md:col-span-5">
+					<img src="{base}/black.svg" alt="bitboxx" class="h-5 w-auto" />
+					<p class="mt-5 font-mincho text-[13px] leading-[2] text-ink/70 max-w-sm">
+						このサイトは、bitboxx がリリースしているアプリの紹介と、共通の利用規約・プライバシーポリシーをまとめた窓口です。会社の活動全体については
+						<a href="https://www.bitboxx.co.jp" class="underline underline-offset-4 decoration-ink/30 hover:text-sakura transition-colors">本サイト</a>
+						をご覧ください。
+					</p>
+				</div>
+
+				<div class="md:col-span-3">
+					<p class="font-mincho text-[12px] tracking-[0.18em] text-ink/55">アプリ</p>
+					<ul class="mt-4 space-y-2 font-mincho text-[13px] text-ink/85">
+						<li><a href="{base}/" class="hover:text-sakura transition-colors">リリース済みのアプリ</a></li>
+					</ul>
+				</div>
+
+				<div class="md:col-span-2">
+					<p class="font-mincho text-[12px] tracking-[0.18em] text-ink/55">規約</p>
+					<ul class="mt-4 space-y-2 font-mincho text-[13px] text-ink/85">
+						<li><a href="{base}/terms-of-service" class="hover:text-sakura transition-colors">利用規約</a></li>
+						<li><a href="{base}/privacy-policy" class="hover:text-sakura transition-colors">プライバシーポリシー</a></li>
+					</ul>
+				</div>
+
+				<div class="md:col-span-2">
+					<p class="font-mincho text-[12px] tracking-[0.18em] text-ink/55">お問い合わせ</p>
+					<ul class="mt-4 space-y-2 font-mincho text-[13px] text-ink/85">
+						<li><a href="mailto:support-apps@bitboxx.co.jp" class="hover:text-sakura transition-colors break-all">support-apps@bitboxx.co.jp</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="mt-12 pt-6 border-t border-ink/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+				<p class="font-mincho text-[12px] text-ink/60">株式会社bitboxx</p>
+				<p class="font-mincho text-[12px] text-ink/50">© {new Date().getFullYear()} bitboxx Inc. All rights reserved.</p>
+			</div>
 		</div>
 	</footer>
 </div>
 
-<svelte:head>
-	<!-- Fonts & Icons -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
-
-	<!-- Material Typography -->
-	<link rel="stylesheet" href="https://unpkg.com/@material/typography@14.0.0/dist/mdc.typography.css" />
-
-	<!-- SMUI -->
-	<link rel="stylesheet" href="https://unpkg.com/svelte-material-ui/bare.css" />
-</svelte:head>
-
 <style>
-	/* オーバーレイ時にコンテンツがスクロールしないようにする */
-	body.menu-open {
-		overflow: hidden;
+	.menu-btn {
+		background-color: #ffffff;
+		color: #111014;
+		border: 1px solid #111014;
+	}
+	.menu-btn:hover {
+		background-color: #FF2630;
+		color: #ffffff;
+		border-color: #FF2630;
+	}
+	.mobile-menu {
+		background-color: #FFFFFF;
 	}
 </style>
