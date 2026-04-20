@@ -4,28 +4,64 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				color1: '#004CA0',
-				color2: '#C0E4FF',
-				color3: '#B78F00',
-				textColor: '#0F0101',
-				linkColor: '#00B2FF',
-				backgroundColor: '#FFFFFF'
+				primary: {
+					DEFAULT: '#D62649'
+				},
+				cream: {
+					50: '#FFFFFF',
+					100: '#F6F6F4',
+					200: '#ECEBE7',
+					300: '#D9D8D2'
+				},
+				ink: {
+					DEFAULT: '#111014',
+					700: '#2A272F',
+					500: '#4B4752'
+				},
+				sakura: {
+					DEFAULT: '#FF2630',
+					soft: '#FF6B72'
+				},
+				sora: {
+					DEFAULT: '#7AA2FF',
+					deep: '#3D4AFF'
+				},
+				mint: {
+					DEFAULT: '#9DE8C3'
+				},
+				sun: {
+					DEFAULT: '#FFD166'
+				}
 			},
 			fontFamily: {
-				en: ['Spartan', 'sans-serif'],
-				jp: ['Noto Sans JP', 'sans-serif']
+				sans: [
+					'"Space Grotesk"',
+					'-apple-system',
+					'BlinkMacSystemFont',
+					'"Helvetica Neue"',
+					'"Noto Sans JP"',
+					'"Hiragino Kaku Gothic ProN"',
+					'system-ui',
+					'sans-serif'
+				],
+				display: [
+					'"Fraunces"',
+					'ui-serif',
+					'Georgia',
+					'"Hiragino Mincho ProN"',
+					'"Noto Serif JP"',
+					'serif'
+				],
+				mincho: [
+					'"Noto Serif JP"',
+					'"Hiragino Mincho ProN"',
+					'ui-serif',
+					'serif'
+				],
+				mono: ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace']
 			},
-			fontSize: {
-				xs: '.75rem',
-				sm: '.875rem',
-				base: '1rem',
-				lg: '1.125rem',
-				xl: '1.25rem',
-				'2xl': '1.5rem',
-				'3xl': '1.875rem',
-				'4xl': '2.25rem',
-				'5xl': '3rem',
-				'6xl': '4rem'
+			letterSpacing: {
+				hyper: '-0.04em'
 			}
 		}
 	},
