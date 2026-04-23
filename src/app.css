@@ -2,60 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply bg-backgroundColor text-textColor font-en;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
+@layer base {
+  :root {
+    --cream: #FFFFFF;
+    --cream-soft: #F6F6F4;
+    --ink: #111014;
+    --sakura: #FF2630;
+    --sora: #7AA2FF;
+    --mint: #9DE8C3;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont,
+      "Helvetica Neue", "Noto Sans JP", "Hiragino Kaku Gothic ProN",
+      system-ui, sans-serif;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--cream);
+  }
 }
 
-/* Apple Storeのフォントスタイル */
-.font-en {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  .paper-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.09;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .underline-handwritten {
+    background-image: linear-gradient(transparent 62%, var(--sakura) 62%, var(--sakura) 88%, transparent 88%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0 .12em;
+  }
+
+  .btn-ink {
+    background-color: #111014;
+    color: #ffffff;
+  }
+  .btn-ink:hover {
+    background-color: #FF2630;
+  }
+  .btn-ink svg { color: #ffffff; }
+  .btn-ink:hover svg { color: #ffffff; }
+
+  /* Fine-tuned scrollbar for screenshot strips */
+  .scrollbar-soft::-webkit-scrollbar {
+    height: 6px;
+  }
+  .scrollbar-soft::-webkit-scrollbar-thumb {
+    background: rgba(17, 16, 20, 0.18);
+    border-radius: 9999px;
+  }
+  .scrollbar-soft::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
-.font-jp {
-    font-family: "SF Pro JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-}
-
-/* Appleの標準文字色 */
-.text-color {
-    color: #1D1D1F; /* Apple Store の標準フォントカラー */
-}
-
-.color1 {
-    color: #1D1D1F;
-}
-
-.color2 {
-    color: #6E6E73; /* Apple Store のサブテキスト用グレー */
-}
-
-.color3 {
-    color: #86868B; /* Apple Store の説明用グレー */
-}
-
-/* リンクのスタイル (Apple風) */
-a {
-    color: #0071E3; /* Appleのリンクカラー */
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* カードのホバーエフェクト */
-.card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: scale(1.009); /* カードを少し拡大 */
-    cursor: pointer; /* ポインタを表示 */
-}
-
-.pointer {
-    cursor: pointer; /* ポインタを表示 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
